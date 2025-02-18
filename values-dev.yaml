@@ -1,0 +1,47 @@
+# Default values for springboot-java-app.
+# Declare variables to be passed into your templates.
+
+# This will set the replicaset count. 
+replicaCount: 4
+
+# This sets the container image.
+image:
+  repository: colanta06/java-app
+  # This sets the pull policy for images.
+  pullPolicy: IfNotPresent
+  # Overrides the image tag whose default is the chart appVersion.
+  tag: "v1.0.1"
+
+# This is for setting Kubernetes Labels to a Pod.
+podLabels: 
+  app: springboot-java-app
+  chart: springboot-java-app
+  release: springboot-java-app
+
+# This is for setting up a service.
+service:
+  # This sets the service type. 
+  type: NodePort
+  # This sets the ports.
+  port: 31000
+  targetPort: 8080
+
+# This is to setup the liveness and readiness probes.
+livenessProbe:
+  httpGet:
+    path: /
+    port: 8080
+  initialDelaySeconds: 10
+  periodSeconds: 5
+  timeoutSeconds: 2
+  failureThreshold: 3
+readinessProbe:
+  httpGet:
+    path: /
+    port: 8080
+  initialDelaySeconds: 5
+  periodSeconds: 3
+  timeoutSeconds: 1
+  failureThreshold: 3
+
+
