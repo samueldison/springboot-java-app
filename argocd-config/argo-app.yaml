@@ -1,4 +1,3 @@
----
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -14,7 +13,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: 'git@github.com:samueldison/springboot-java-app.git'
+    repoURL: 'https://github.com/samueldison/springboot-java-app.git'
     targetRevision: main
     path: .
     helm:
@@ -34,4 +33,3 @@ spec:
       - PrunePropagationPolicy=background 
       - PruneLast=true
       - ApplyOutOfSyncOnly=true
----
