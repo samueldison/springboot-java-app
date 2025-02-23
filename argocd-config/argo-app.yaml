@@ -5,11 +5,10 @@ metadata:
   namespace: argocd
   annotations:
     argocd-image-updater.argoproj.io/image-list: colanta06/java-app:v1.0.x
-    argocd-image-updater.argoproj.io/java-app.helm.image-tag: image.tag
     argocd-image-updater.argoproj.io/java-app.update-strategy: semver
     argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
   finalizers:
-  - resource-finalizer.argocd.argoproj.io  
+  - "resource-finalizer.argocd.argoproj.io/"  
 spec:
   project: default
   source:
