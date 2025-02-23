@@ -8,7 +8,7 @@ metadata:
     argocd-image-updater.argoproj.io/java-app.update-strategy: semver
     argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
   finalizers:
-  - "resource-finalizer.argocd.argoproj.io/"  
+  - "argoproj.io/argocd-resource-finalizer"  
 spec:
   project: default
   source:
