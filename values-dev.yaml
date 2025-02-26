@@ -38,7 +38,7 @@ livenessProbe:
 readinessProbe:
   httpGet:
     path: /
-    port: 8080
+    port: 8084
   initialDelaySeconds: 5
   periodSeconds: 3
   timeoutSeconds: 1
