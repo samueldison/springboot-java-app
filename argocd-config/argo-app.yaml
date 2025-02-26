@@ -1,25 +1,36 @@
+# Over riding values in the Helm Charts' values.yaml file 
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: springboot-java-app
   namespace: argocd
   annotations:
-    argocd-image-updater.argoproj.io/image-list: colanta06/java-app:v1.0.x
+    argocd-image-updater.argoproj.io/image-list: colanta06/java-app:v1.0.x # Docker image with constraints/(Major.Minor.Patch)
     argocd-image-updater.argoproj.io/java-app.update-strategy: semver
     argocd-image-updater.argoproj.io/write-back-method: git:secret:argocd/git-creds
   finalizers:
-  - "argoproj.io/argocd-resource-finalizer"  
+    - "argoproj.io/argocd/resource-finalizer"  
 spec:
   project: default
   source:
     repoURL: 'https://github.com/samueldison/springboot-java-app.git'
     targetRevision: main
-    path: .
+    chart: springboot-java-app
     helm:
-      valueFiles:
-        - values-dev.yaml
+      values: 
+        parameters:
+        - name: image.repository
+          value: colanta06/java-app
+        - name: service.port
+          value: '8084'
+        - name: livenessProbe.httpGet.path
+          value: /healthz
+        - name: readinessProbe.httpGet.path
+          value: /healthz
+        - name: image.tag
+          value: v1.0.1      
   destination:
-    server: 'https://kubernetes.default.svc'
+    server: https://kubernetes.default.svc
     namespace: dev
   syncPolicy:
     automated:
@@ -27,8 +38,8 @@ spec:
       prune: true
       selfHeal: true
     syncOptions:
-      - Validate=true
-      - CreateNamespace=true 
-      - PrunePropagationPolicy=background 
-      - PruneLast=true
-      - ApplyOutOfSyncOnly=true
+    - Validate=true
+    - CreateNamespace=true 
+    - PrunePropagationPolicy=background 
+    - PruneLast=true
+    - ApplyOutOfSyncOnly=true
