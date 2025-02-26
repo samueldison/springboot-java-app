@@ -24,13 +24,13 @@ service:
   type: NodePort
   # This sets the ports.
   port: 31000
-  targetPort: 8080
+  targetPort: 8084
 
 # This is to setup the liveness and readiness probes.
 livenessProbe:
   httpGet:
     path: /
-    port: 8080
+    port: 8084
   initialDelaySeconds: 10
   periodSeconds: 5
   timeoutSeconds: 2
